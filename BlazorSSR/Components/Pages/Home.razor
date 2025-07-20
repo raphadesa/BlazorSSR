@@ -1,0 +1,49 @@
+﻿@page "/"
+@inject IHttpContextAccessor HttpContextAccessor
+@inject NavigationManager navigationManager 
+@using Newtonsoft.Json.Linq
+<HeadContent>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</HeadContent>
+<EditForm @ref=Form Enhance Model="ContactModel" OnSubmit="HandleSubmitAsync" FormName="contactForm">
+        <DataAnnotationsValidator/>            
+            <div class="mb-3">
+           <label class="form-label">Nombre:</label>
+        <InputText class="form-control" @bind-Value="@ContactModel.Name" />
+        <ValidationMessage For="@(() => ContactModel.Name)" />
+            </div>    
+    <div class="g-recaptcha" data-sitekey="you-sitekey" data-permanent></div>
+             <input type="hidden" name="g-recaptcha-response"  />
+        <ValidationMessage For="@(() => ContactModel.IsRecaptchaValid)" />
+            <button type="submit" class="btn btn-primary">Enviar</button>
+       
+</EditForm>
+@code{
+    [SupplyParameterFromForm]
+    Contact ContactModel { get; set; } = new();
+    private EditForm Form { get; set; }
+    HttpRequest httpRequest => HttpContextAccessor.HttpContext?.Request;    
+
+    async Task<bool> validateCapcha(string response)
+    {
+        var secretKey = "you-secret-key";
+        var apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}";
+        var requestUri = string.Format(apiUrl, secretKey, response);
+        var http = new HttpClient();
+        var request  = await http.GetStringAsync(requestUri);
+        JObject jResponse = JObject.Parse(request);
+        var isSuccess = jResponse.Value<bool>("success");
+        return isSuccess;
+    }
+
+    async Task HandleSubmitAsync()
+    {
+        var response = httpRequest.Form["g-recaptcha-response"];
+        ContactModel.IsRecaptchaValid = await validateCapcha(response);
+        if(Form.EditContext.Validate())
+        {   
+            navigationManager.NavigateTo("Weather");            
+        }
+    }
+
+}
