@@ -2,8 +2,8 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject NavigationManager navigationManager 
 @using Newtonsoft.Json.Linq
-<HeadContent>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<HeadContent>   
+  
 </HeadContent>
 <EditForm @ref=Form Enhance Model="ContactModel" OnSubmit="HandleSubmitAsync" FormName="contactForm">
         <DataAnnotationsValidator/>            
@@ -12,8 +12,8 @@
         <InputText class="form-control" @bind-Value="@ContactModel.Name" />
         <ValidationMessage For="@(() => ContactModel.Name)" />
             </div>    
-    <div class="g-recaptcha" data-sitekey="you-sitekey" data-permanent></div>
-             <input type="hidden" name="g-recaptcha-response"  />
+          <div class="g-recaptcha" id="recaptcha" data-sitekey="6LdjGzwUAAAAAPaTuCbpKUMnaqtpgAy2r9lvZeaK" data-permanent></div>
+          <input type="hidden" name="g-recaptcha-response"  />
         <ValidationMessage For="@(() => ContactModel.IsRecaptchaValid)" />
             <button type="submit" class="btn btn-primary">Enviar</button>
        
