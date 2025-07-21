@@ -22,12 +22,16 @@
     <script>
 
         Blazor.addEventListener('enhancedload', () =>
-        {     
-            if(location.pathname=='/')
-             {
-                window.location.reload();
-             }
-        });  
+        {   
+                const recaptcha = document.querySelector('.g-recaptcha');
+                if (recaptcha) {
+                    const sitekey = recaptcha.getAttribute('data-sitekey');
+                    grecaptcha.render(recaptcha, {
+                        'sitekey': sitekey,
+                        'size': 'normal'
+                    });
+                }           
+        });   
         
         
     </script>

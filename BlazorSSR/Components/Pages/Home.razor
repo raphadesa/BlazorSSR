@@ -12,7 +12,7 @@
         <InputText class="form-control" @bind-Value="@ContactModel.Name" />
         <ValidationMessage For="@(() => ContactModel.Name)" />
             </div>    
-          <div class="g-recaptcha" id="recaptcha" data-sitekey="6LdjGzwUAAAAAPaTuCbpKUMnaqtpgAy2r9lvZeaK" data-permanent></div>
+          <div class="g-recaptcha" data-sitekey="6LdjGzwUAAAAAPaTuCbpKUMnaqtpgAy2r9lvZeaK"></div>
           <input type="hidden" name="g-recaptcha-response"  />
         <ValidationMessage For="@(() => ContactModel.IsRecaptchaValid)" />
             <button type="submit" class="btn btn-primary">Enviar</button>
