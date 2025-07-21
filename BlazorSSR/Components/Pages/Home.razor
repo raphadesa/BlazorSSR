@@ -2,9 +2,6 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject NavigationManager navigationManager 
 @using Newtonsoft.Json.Linq
-<HeadContent>   
-  
-</HeadContent>
 <EditForm @ref=Form Enhance Model="ContactModel" OnSubmit="HandleSubmitAsync" FormName="contactForm">
         <DataAnnotationsValidator/>            
             <div class="mb-3">
