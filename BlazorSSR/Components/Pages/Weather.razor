@@ -1,11 +1,20 @@
 ﻿@page "/weather"
 @attribute [StreamRendering]
+@inject NavigationManager navigationManager
 
 <PageTitle>Weather</PageTitle>
 
 <h1>Weather</h1>
 
+
 <p>This component demonstrates showing data.</p>
+
+
+<Button Click="Click">Show me !</Button>
+@if(showDiv)
+{
+    <h2>I am a div !!!</h2>
+}
 
 @if (forecasts == null)
 {
@@ -38,7 +47,7 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-
+    bool showDiv { get; set; }
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
@@ -52,6 +61,12 @@ else
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = summaries[Random.Shared.Next(summaries.Length)]
         }).ToArray();
+    }
+
+    void Click()
+    {
+        // Handle button click logic here
+        showDiv = true;
     }
 
     private class WeatherForecast

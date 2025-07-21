@@ -1,0 +1,13 @@
+﻿<form method="post" data-enhance>
+    <input type="hidden" name="_handler" value="form" />
+    <AntiforgeryToken />    
+    <button type="submit" class="button button-secondary">@ChildContent</button>
+</form>
+<form @formname="form" @onsubmit="@Click"></form>
+
+@code {
+    [Parameter]
+    public EventCallback Click { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}
